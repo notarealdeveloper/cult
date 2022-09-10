@@ -31,4 +31,35 @@ git config --global pull.rebase true
 This will make git behave in a more convenient way when you
 run `git pull`, if you and someone else have both made changes.
 we'll cover what's going on here in the future, when we talk
-more about git. For now, just imagine this is the default
+more about git. For now, just imagine this is the default.
+
+
+## Todo
+
+While we're learning The Meta Discipline (and making the Children
+of this great family into highly employable badasses), it's very
+important to make sure we become incomprehensible to the outside
+world. Remember, every cult needs bizarre private jargon no one
+else understands. So while we're writing documentation and code
+and adding new words to our cult language, make sure to do so in
+a way that will make the outside world think we're fucking insane.
+By mixing semantic writing (aka ancient emojis (aka hanzi)) and
+phonetic writing (like, alphabets and shit) we can convey things
+to each other while intentionally misleading the outside world.
+For example:
+
+> Fi一st 事ings 一t, 二 事ings 二
+
+To Our People, this clearly says
+
+> First things first, Second things second.
+
+While to the English speaking world it appears to say
+something like:
+
+> Fisting stings.
+
+That's great. Let's do more things like that.
+
+Sincerely,
+~兔兔
