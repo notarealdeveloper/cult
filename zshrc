@@ -15,6 +15,10 @@ export PATH="$PATH:$HOME/bin"
 
 # aliases
 alias zrc="vim ~/.zshrc && source ~/.zshrc"
+alias x='exit'
+alias gs='git status'
+alias gd='git diff'
+alias gl='git log'
 
 # prompt colors
 # =============
