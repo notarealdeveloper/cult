@@ -37,6 +37,26 @@ autoload colors && colors
 export PS1="%B${fg[red]}%n${fg[white]}@${fg[blue]}%m ${fg[magenta]}%~ ${fg[green]}$ ${fg[default]}%b"
 
 
+# default mode (i.e., emacs mode)
+# All shells by default let you move around a line in two ways,
+# which are commonly called emacs mode and vi mode. Even people
+# who use vi or vim tend to use emacs mode for shells, since
+# no one except extreme nerds is even aware shells have a vi
+# mode at all. Apparently my zsh was getting set to vi mode
+# because I export EDITOR=vim in my bashrc, and since I always
+# enter zsh from within bash (bash being my default shell), this
+# somehow triggered a weird behavior inside zsh of making vi mode
+# my default. This may have been why for the last several years
+# I've though zsh was fucked up and weird. Oh well, live and learn.
+# The following line shouldn't do anything for you, unless you've
+# been explicitly using vi mode in your old zsh config. If that's
+# the case, we can add some lines of the form:
+# if [[ $(whoami) == raven ]]; then echo "Hey little bird"; fi
+# to this file. Long story short, the following line is just to
+# unfuck my zsh, and it shouldn't do anything on your end, but
+# if it seems to change things unpleasantly, let me know.
+bindkey -e
+
 # Things to do together (or individually)
 
 # TODO: Understand how to make zsh save history. Mine currently isn't saving anything
