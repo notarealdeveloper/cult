@@ -10,6 +10,44 @@
 ### built together as a couple.  ###
 ####################################
 
+# =======================================
+# Things to do together or individually.
+
+# TODO: This one is just for the bird.
+# Refactor this file and push the changes to master.
+# I want you to read all the comments I typed in here (they're a bit verbose,
+# but that's ok). Once you're done reading each comment, I want you to delete
+# it and replace it with one line, or a few words, so we can keep this file
+# nice and concise. For example, once you've read the comment below about
+# autoload and prompt colors, delete it and replace it with something more
+# brief (e.g., just a heading that says "prompt colors"). You can decide
+# what to type, but they should summarize what you learned from the deleted
+# paragraph, if anything. Same deal for the paragraph about emacs mode vs
+# vi mode and all the other big comments in this file. Refactoring is
+# important, so let's delete all the Bunny's yammering and keep this file
+# nice and tight.
+
+# TODO: Understand how to make zsh save history.
+# Mine currently isn't saving anything with our bare bones config.
+# Open the pdf in doc/zsh.pdf and do a ctrl+f search for HISTORY
+# to figure out how. Let's save the history to ~/.zsh_history,
+# and save 10000 lines of the past commands we've typed.
+
+# TODO: Figure out how to figure things out. What's the best way to learn these things?
+# Is it man zsh? zsh --help? Is there built-in documentation like vim? What do zsh experts
+# do when they don't know what to do?
+#
+# Several answers to this I've found so far:
+# 1. type `man zsh<TAB>` to see all the man pages that start with zsh.
+#    Doing that shows one called zshall, which seems to be all the others
+#    concatenated together into a big crazy bastard file.
+#    Doing a /keyword search in that man page has helped me find some things.
+#
+# 2. as mentioned above, the pdf in doc/zsh.pdf is nice too.
+
+# =======================================
+
+
 # add our private ~/bin directory to the $PATH
 export PATH="$PATH:$HOME/bin"
 
@@ -56,12 +94,3 @@ export PS1="%B${fg[red]}%n${fg[white]}@${fg[blue]}%m ${fg[magenta]}%~ ${fg[green
 # unfuck my zsh, and it shouldn't do anything on your end, but
 # if it seems to change things unpleasantly, let me know.
 bindkey -e
-
-# Things to do together (or individually)
-
-# TODO: Understand how to make zsh save history. Mine currently isn't saving anything
-# with our bare bones config.
-
-# TODO: Figure out how to figure things out. What's the best way to learn these things?
-# Is it man zsh? zsh --help? Is there built-in documentation like vim? What do zsh experts
-# do when they don't know what to do?
