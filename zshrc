@@ -16,11 +16,24 @@ export PATH="$PATH:$HOME/bin"
 # aliases
 alias zrc="vim ~/.zshrc && source ~/.zshrc"
 
+# prompt colors
+# =============
+# autoload uses the $fpath feature of zsh to load a function called "colors" from a
+# file somewhere in the array of directories called $fpath (echo $fpath to see this).
+# The "autoload" keyword in zsh seems to be a bit like the "import" or "include"
+# keyword in other programming languages. As usual, importing is different from running,
+# and it seems that 'autoload colors' is a bit like 'from colors import *' in python.
+# Therefore, we have to run 'colors' after that, because (presumably) this may bring
+# other names into scope. Note sure yet. The Bunny has never used zsh before, and he's
+# figuring this out as he goes. If you know how autoload works, let me know.
+autoload colors && colors
+# export PS1="%B$fg[red]%n$fg[white]@$fg[blue]%m $fg[magenta]%~ $fg[green]$ $fg[default]%b"
+# The above line works just fine, but I'm going to make it a bit more like the bash
+# syntax for arrays, which uses ${array[key]} instead of $array[key]
+export PS1="%B${fg[red]}%n${fg[white]}@${fg[blue]}%m ${fg[magenta]}%~ ${fg[green]}$ ${fg[default]}%b"
+
+
 # Things to do together (or individually)
-#
-# TODO: Make PS1 colorful. We need to understand the syntax before we deserve a colorful prompt.
-# I'll set an obnoxiously minimal one for now, to force us to make it better.
-export PS1='$ '
 
 # TODO: Understand how to make zsh save history. Mine currently isn't saving anything
 # with our bare bones config.
