@@ -1,0 +1,59 @@
+#!/bin/bash
+
+# in bash, the variable $0 always refers to the filename of the program
+# currently being run, and $1 refers to the first argument (if any) that
+# was passed to that program on the command line.
+
+# the test [[ -z $1 ]] will be true if the first argument is "z"ero,
+# which is a funny way of saying "there was no first argument passed".
+if [[ -z $1 ]]; then
+    echo "usage: $(basename $0) <path-to-cult-repo>"
+    exit 1
+fi
+
+# if the first argument is not a directory, die
+if [[ ! -d "$1" ]]; then
+    echo "not a directory: $1"
+    exit 1
+fi
+
+# If we get here, then (1) the script was passed an argument, and
+# (2) that argument is a directory. At this point, let's just start
+# creating symbolic links from the config file paths (like ~/.zshrc)
+# to the config files in our repo, so that when we edit the repo,
+# out shell will automatically pick up the changes. For now, let's
+# just create one symlink for ~/.zshrc
+cult_repo="$1"
+
+# pushd is like cd, but with memory.
+# this will cd into the cult repo, pushing our previous location onto
+# a stack of directories, allowing us to return to wherever we previously
+# were by typing 'popd' when we're done.
+pushd "$cult_repo"
+
+# if the folder we're now in has no file called zshrc, die for safety
+if [[ ! -f zshrc ]]; then
+    echo "no zshrc file in repo root: are you sure this is the cult repo?"
+    exit 1
+fi
+
+# ln: create links
+# -s make the link "symbolic" (basically everyone uses this by default)
+# -v verbose, print each thing you do so we can see it
+# -f force, overwrite the 
+# basic usage: ln <filepath> <linkpath> (note: the real file comes first)
+ln -svf "$(realpath zshrc)" ~/.zshrc
+
+# at this point, we're done installing our links, so we don't actually need
+# to popd. The directory we cd'ed into during this script won't affect the
+# shell that ran us (unless we *source* this instead of *executing* it,
+# in which case the outer shell *would* see the changed directory location).
+# Just for good hygiene, let's now popd to return to wherever we were.
+# Again, this isn't necessary, but it would be helpful if we wanted to
+# factor out the code between pushd and popd into a separate shell function,
+# for example.
+
+popd
+
+# all done!
+echo "✅ The cult is now installed. ✨"
