@@ -2,7 +2,12 @@
 
 class Love:
 
-    ALLOWED_TYPES = {'agape', 'phileo', 'eros', 'anal'}
+    ALLOWED_TYPES = {
+        'agape',
+        'phileo',
+        'eros',
+        'anal',
+    }
 
     def __init__(self, type):
         if type not in self.ALLOWED_TYPES:
