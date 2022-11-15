@@ -1,0 +1,145 @@
+#!/bin/bash
+
+# dependencies: xclip
+
+### LIBRARY FUNCTIONS
+# define some functions to see if we have a given command installed.
+#
+# if you want, you can put this in ~/.bashrc and then put
+# source ~/.bashrc at the top of this script.
+
+we_have() {
+    if ! which "$1" &>/dev/null; then
+        return 1
+    else
+        return 0    # 0 is 'true' in unix... cuz why the fuck not?
+    fi
+}
+
+we_dont_have() {
+    if we_have "$1"; then return 1; else return 0; fi
+}
+### /LIBRARY FUNCTIONS
+
+# install dependencies if we don't have them
+if we_dont_have xclip; then
+    echo "$(basename $0): xclip not found, installing"
+    sudo pacman -S xclip
+fi
+
+####################################
+### The real program starts here ###
+####################################
+
+# this declares an "associative array" in bash.
+# these are what python calls "dictionaries"
+declare -A things
+
+# We can use environment variables to factor out repeated
+# bits of information, if we want to.
+BIRD="Jing Lin"
+BUNNY="Jason Wilkes"
+STUDENT_ID="1520012"
+
+things=(
+    # self (best person ever)
+    [name]="Jing Wilkes"
+    [phone]="+86-180-1910-3350"
+    [github]="https://github.com/ravensroom"
+    [job_title]="Little Bird"
+    [student_id]="$STUDENT_ID"
+    [trine_student_id]="$STUDENT_ID" # for tab completion from 'trine_<TAB>'
+
+    # family (permanent)
+    [bunny]="$BUNNY"
+    [bunny_phone]="+1-805-708-0125"
+    [bunny_github]="https://github.com/notarealdeveloper"
+    [bunny_address]="2065 Cherokee Lane, Escondido, CA. 92026."
+    [bunny_email]="letshaveanadventure@gmail.com"
+
+    # marriage (until i find someone better)
+    [husband]="$BUNNY"
+    [maiden_name]="$BIRD"
+    [full_name]="$BIRD Wilkes"
+    [chinese_name]="林静"
+    [ring_meaning_1]="Not only this, but also this."
+    [ring_meaning_2]="I will never have nothing, I will always have this."
+)
+
+
+# experimental features (python)
+
+days_since_we_met() {
+    python <<- EOF
+	import datetime
+	today = datetime.date.today()
+	birth = datetime.date(2022, 8, 10)
+	days = (today - birth).days
+	print(f"New life began {days} days ago.")
+EOF
+}
+
+# /experimental features
+
+
+# main program
+usage() {
+    # We can optionally pass in an explanation of what went wrong.
+    [[ -n "$1" ]] && log "${1}"
+    cat << EOF
+USAGE
+    $(basename $0) [OPTIONS]
+
+OPTIONS
+    --list, -l      List all things
+    --help, -h      Show this help
+
+THINGS:
+$(
+    for f in ${!things[@]}; do
+        echo $f
+    done \
+    | sed -r -z 's@\n@ @g' | fold -w 70 -s | sed 's@.*@    &@g'
+)
+EOF
+    exit 1
+}
+
+thing_is_available() {
+    echo ${!things[*]} | sed -z -r 's@ @\n@g' | grep -cq "^${1}$"
+}
+
+# For automatically adding new keys to our tab-completion
+list_all_things() {
+    echo ${!things[*]}
+    exit 0
+}
+
+show_thing () {
+    local key="${1}"
+    local thing="${things[$key]}"
+
+    if ! thing_is_available "$key"; then
+        echo "Thing $key not in list of available things."
+		exit 1
+    fi
+
+    printf "${thing}\n"
+    printf "${thing}" | xclip -selection c
+    printf "${thing}" | xclip -selection p
+
+    exit 0
+}
+
+[[ -z "$1" ]] && usage
+
+while [[ -n "$1" ]]; do
+    case "$1" in
+        -h|--help)          usage;;
+        -l|--list)          list_all_things;;
+		-a|--age)			days_since_we_met;;
+        -*)                 usage "Unrecognized option: ${1}";;
+        *)                  show_thing "${1}";;
+    esac
+    shift
+done
